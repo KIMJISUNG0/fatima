@@ -74,7 +74,6 @@ h1{
 
 /* ── 지도 영역 ── */
 .map-section{background:var(--bg);padding:18px 0 0;}
-
 .map-static{
   display:block;
   position:relative;
@@ -82,11 +81,8 @@ h1{
   aspect-ratio:4/3;
   background:var(--bg-soft);
   overflow:hidden;
-  text-decoration:none;
-  cursor:pointer;
+  cursor:default;
 }
-
-/* 지도 위 캡슐 */
 .map-pill{
   position:absolute;
   left:50%;bottom:14px;
@@ -104,7 +100,7 @@ h1{
 }
 .map-pill strong{font-weight:600;color:var(--marian);}
 
-/* ── 지도 앱 버튼 ── */
+/* ── 상단 퀵 버튼 ── */
 .map-apps{
   display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
   padding:14px 14px 22px;
@@ -124,11 +120,6 @@ h1{
   display:flex;align-items:center;justify-content:center;
   font-size:18px;font-weight:700;color:white;
 }
-.map-app[data-app="naver"] .badge{background:var(--naver);}
-.map-app[data-app="kakao"] .badge{background:var(--kakao);color:var(--kakao-text);}
-.map-app[data-app="google"] .badge{background:var(--google);}
-.map-app[data-app="tmap"] .badge{background:var(--tmap);}
-.map-app .name{font-size:12px;font-weight:500;color:var(--text-soft);}
 
 /* ── 정보 카드 ── */
 .info-card{
@@ -247,35 +238,30 @@ footer{
 </header>
 
 <div class="map-section">
-  <div class="map-static" style="cursor:default;">
+  <div class="map-static">
     <iframe 
-      src="https://maps.google.com/maps?q=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&hl=ko&z=16&output=embed" 
-      width="100%" 
-      height="100%" 
-      style="border:0;" 
-      allowfullscreen="" 
-      loading="lazy" 
-      referrerpolicy="no-referrer-when-downgrade">
+      src="https://maps.google.com/maps?q=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+      width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
     </iframe>
     <div class="map-pill">⛪ <strong>동두천성당</strong> · 동광로 64</div>
   </div>
 
   <div class="map-apps">
     <a class="map-app" data-app="naver"
-       href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">
-      <span class="badge">N</span><span class="name">네이버지도</span>
+       href="nmap://search?query=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">
+      <span class="badge" style="background:var(--naver);">N</span><span class="name">네이버</span>
     </a>
     <a class="map-app" data-app="kakao"
-       href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">
-      <span class="badge">K</span><span class="name">카카오맵</span>
+       href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">
+      <span class="badge" style="background:var(--kakao);color:var(--kakao-text);">K</span><span class="name">카카오</span>
     </a>
     <a class="map-app" data-app="google"
-       href="https://maps.google.com/maps?q=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">
-      <span class="badge">G</span><span class="name">구글맵</span>
+       href="google.com/maps?q=...&output=embed1">
+      <span class="badge" style="background:var(--google);">G</span><span class="name">구글맵</span>
     </a>
     <a class="map-app" data-app="tmap"
-       href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055277&goaly=37.908071">
-      <span class="badge">T</span><span class="name">티맵</span>
+       href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055233&goaly=37.908092">
+      <span class="badge" style="background:var(--tmap);">T</span><span class="name">티맵</span>
     </a>
   </div>
 </div>
@@ -317,8 +303,8 @@ footer{
       <p class="route-text"><strong>1번 출구</strong>에서 어수로 방향 직진, <strong>신천교</strong>를 건너 상패주공아파트 쪽으로 도보 약 10분.</p>
       <div class="route-meta"><span>도보 10–12분</span><span>약 750m</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 도보</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 도보</a>
+        <a href="nmap://route/walk?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버 도보</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오 도보</a>
       </div>
     </div>
     <div class="route-card">
@@ -326,8 +312,8 @@ footer{
       <p class="route-text"><strong>1호선 의정부역</strong>에서 <strong>소요산행</strong> 탑승 → <strong>동두천중앙역</strong> 하차.</p>
       <div class="route-meta"><span>약 35분</span><span>10개 역</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+        <a href="nmap://route/public?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버 경로</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오 경로</a>
       </div>
     </div>
     <div class="route-card">
@@ -335,8 +321,8 @@ footer{
       <p class="route-text">파주는 1호선 직통이 없습니다. <strong>경의중앙선 → 청량리역에서 1호선 환승</strong>, 또는 <strong>금촌·운정 → 의정부행 광역버스 → 의정부역에서 1호선 환승</strong>이 편리합니다.</p>
       <div class="route-meta"><span>약 1시간 40분 ~ 2시간</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+        <a href="nmap://route/public?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버 경로</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오 경로</a>
       </div>
     </div>
     <div class="route-card">
@@ -344,8 +330,8 @@ footer{
       <p class="route-text">포천은 지하철이 없으므로 <strong>3001·3006번 시외버스로 의정부역</strong>까지 이동 후 <strong>1호선 소요산행 → 동두천중앙역</strong>으로 환승해 주세요.</p>
       <div class="route-meta"><span>약 1시간 30분</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+        <a href="nmap://route/public?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버 경로</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오 경로</a>
       </div>
     </div>
   </div>
@@ -356,9 +342,9 @@ footer{
       <p class="route-text"><strong>3번 국도(평화로)</strong>를 따라 양주·동두천 방향 직진 → 동두천 시내 진입 → <strong>동두천중앙역 사거리</strong>에서 신천교 건너 좌회전.</p>
       <div class="route-meta"><span>약 30–40분</span><span>약 18km</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=navigation&elat=37.908071&elng=127.055277&etitle=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오</a>
-        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055277&goaly=37.908071">티맵</a>
+        <a href="nmap://route/car?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오</a>
+        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055233&goaly=37.908092">티맵</a>
       </div>
     </div>
     <div class="route-card">
@@ -366,9 +352,9 @@ footer{
       <p class="route-text"><strong>372번 지방도(호국로) → 신북IC 또는 자일동 경유 → 3번 국도</strong>로 합류 후 동두천 시내 진입.</p>
       <div class="route-meta"><span>약 40–50분</span><span>약 25km</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=navigation&elat=37.908071&elng=127.055277&etitle=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오</a>
-        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055277&goaly=37.908071">티맵</a>
+        <a href="nmap://route/car?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오</a>
+        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055233&goaly=37.908092">티맵</a>
       </div>
     </div>
     <div class="route-card">
@@ -376,14 +362,14 @@ footer{
       <p class="route-text"><strong>56번 지방도(연풍로) → 적성·전곡 경유 → 3번 국도</strong>로 동두천 진입. 또는 <strong>외곽순환고속도로 → 의정부IC → 평화로</strong>.</p>
       <div class="route-meta"><span>약 1시간</span><span>약 40km</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=navigation&elat=37.908071&elng=127.055277&etitle=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오</a>
-        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055277&goaly=37.908071">티맵</a>
+        <a href="nmap://route/car?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오</a>
+        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055233&goaly=37.908092">티맵</a>
       </div>
     </div>
     <div class="note">
       <div class="title">🅿︎ 주차 안내</div>
-      성당 내 주차 공간이 한정적입니다. 가능하시면 카풀이나 대중교통을 이용해 주시고, 자가용 이용 시 여유 있게 도착해 주세요.
+      성당 내 주차 공간이 한정적입니다. 자가용 이용 시 여유 있게 도착해 주세요.
     </div>
   </div>
 
@@ -393,8 +379,8 @@ footer{
       <p class="route-text"><strong>36번(의정부↔동두천)</strong> 또는 <strong>3300번 광역</strong> 탑승 → <strong>동두천중앙역</strong> 또는 <strong>상패주공아파트</strong> 정류장 하차.</p>
       <div class="route-meta"><span>약 50분 ~ 1시간</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+        <a href="nmap://route/public?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버 경로</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오 경로</a>
       </div>
     </div>
     <div class="route-card">
@@ -402,8 +388,8 @@ footer{
       <p class="route-text"><strong>3001·3006번(포천↔의정부)</strong>으로 의정부역까지 → <strong>1호선</strong> 또는 <strong>36번 버스</strong>로 환승.</p>
       <div class="route-meta"><span>약 1시간 30분 ~ 2시간</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+        <a href="nmap://route/public?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버 경로</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오 경로</a>
       </div>
     </div>
     <div class="route-card">
@@ -411,8 +397,8 @@ footer{
       <p class="route-text"><strong>금촌·운정 → 의정부행 광역버스(3200·G7426 등)</strong> 탑승 → 의정부에서 <strong>36번 버스</strong> 또는 <strong>1호선</strong> 환승.</p>
       <div class="route-meta"><span>약 2시간</span></div>
       <div class="route-cta">
-        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
-        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+        <a href="nmap://route/public?dlat=37.908092&dlng=127.055233&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&appname=fatima">네이버 경로</a>
+        <a href="kakaomap://route?ep=37.908092,127.055233&en=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">카카오 경로</a>
       </div>
     </div>
     <div class="note">
@@ -484,7 +470,6 @@ toggle.addEventListener('click',()=>{
   }
 });
 
-// 자동재생 시도 → 차단되면 첫 터치시 재생
 window.addEventListener('load',()=>{
   bgm.volume=0.45;
   bgm.play().then(()=>setUI(true)).catch(()=>{
