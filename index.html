@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파티마 성모님 행사 · 동두천성당 길안내</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f5f5f7;
+  --bg-card:#fbfbfd;
+  --text:#1d1d1f;
+  --text-soft:#515154;
+  --text-mute:#86868b;
+  --line:#e5e5e7;
+  --line-soft:#f0f0f2;
+  --accent:#0071e3;
+  --marian:#1f3b8a;
+  --naver:#03c75a;
+  --kakao:#fee500;
+  --kakao-text:#3c1e1e;
+  --google:#4285f4;
+  --tmap:#ee2737;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{background:var(--bg-soft);}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",
+    "Pretendard","Apple SD Gothic Neo","Helvetica Neue",Arial,sans-serif;
+  color:var(--text);
+  line-height:1.5;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  letter-spacing:-0.01em;
+}
+main{max-width:560px;margin:0 auto;background:var(--bg);min-height:100vh;position:relative;}
+
+/* ── 음악 토글 ── */
+.music-toggle{
+  position:fixed;
+  top:14px;right:14px;
+  z-index:1000;
+  width:44px;height:44px;
+  border-radius:22px;
+  background:rgba(255,255,255,0.92);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 2px 12px rgba(0,0,0,0.12);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  font-size:20px;
+  transition:transform 0.15s,background 0.15s;
+}
+.music-toggle:active{transform:scale(0.92);}
+.music-toggle.playing{background:rgba(31,59,138,0.92);}
+@media(min-width:561px){
+  .music-toggle{right:calc(50% - 280px + 14px);}
+}
+
+/* ── 헤더 ── */
+header.hero{
+  padding:28px 22px 20px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+}
+.kicker{font-size:13px;color:var(--accent);font-weight:600;margin-bottom:6px;}
+h1{
+  font-size:26px;font-weight:700;letter-spacing:-0.025em;
+  color:var(--text);line-height:1.25;margin-bottom:6px;
+}
+.subtitle{font-size:15px;color:var(--text-mute);font-weight:400;}
+
+/* ── 지도 영역 ── */
+.map-section{background:var(--bg);padding:18px 0 0;}
+
+.map-static{
+  display:block;
+  position:relative;
+  width:100%;
+  aspect-ratio:4/3;
+  background:var(--bg-soft);
+  overflow:hidden;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+/* 지도 위 캡슐 */
+.map-pill{
+  position:absolute;
+  left:50%;bottom:14px;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,0.95);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  padding:10px 16px;
+  border-radius:14px;
+  font-size:13.5px;color:var(--text);font-weight:500;
+  box-shadow:0 4px 16px rgba(0,0,0,0.12);
+  white-space:nowrap;
+  z-index:10;
+  pointer-events:none;
+}
+.map-pill strong{font-weight:600;color:var(--marian);}
+
+/* ── 지도 앱 버튼 ── */
+.map-apps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
+  padding:14px 14px 22px;
+  background:var(--bg);
+  border-bottom:8px solid var(--bg-soft);
+}
+.map-app{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:14px 4px;
+  background:var(--bg-soft);border-radius:14px;
+  text-decoration:none;color:var(--text);
+  transition:transform 0.15s,background 0.15s;
+}
+.map-app:active{transform:scale(0.96);background:var(--line);}
+.map-app .badge{
+  width:38px;height:38px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:700;color:white;
+}
+.map-app[data-app="naver"] .badge{background:var(--naver);}
+.map-app[data-app="kakao"] .badge{background:var(--kakao);color:var(--kakao-text);}
+.map-app[data-app="google"] .badge{background:var(--google);}
+.map-app[data-app="tmap"] .badge{background:var(--tmap);}
+.map-app .name{font-size:12px;font-weight:500;color:var(--text-soft);}
+
+/* ── 정보 카드 ── */
+.info-card{
+  margin:0 16px 8px;
+  background:var(--bg-card);
+  border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;
+}
+.info-row{
+  display:grid;grid-template-columns:80px 1fr;
+  align-items:center;
+  padding:14px 18px;
+  border-bottom:1px solid var(--line-soft);
+  font-size:15.5px;
+}
+.info-row:last-child{border-bottom:none;}
+.info-row .label{color:var(--text-mute);font-size:14px;font-weight:500;align-self:start;padding-top:2px;}
+.info-row .value{color:var(--text);font-weight:500;}
+.info-row .value a{color:var(--accent);text-decoration:none;font-weight:500;}
+.info-row .value .sub{display:block;color:var(--text-mute);font-size:13px;font-weight:400;margin-top:2px;}
+.schedule{display:flex;flex-direction:column;gap:6px;}
+.schedule-item{display:flex;align-items:center;gap:12px;}
+.schedule-item .time{
+  font-weight:600;color:var(--marian);font-size:14.5px;
+  font-variant-numeric:tabular-nums;min-width:74px;
+}
+.schedule-item .what{color:var(--text);font-size:14.5px;}
+
+/* ── 섹션 ── */
+section{padding:28px 16px 8px;}
+h2{font-size:22px;font-weight:700;letter-spacing:-0.022em;margin-bottom:4px;color:var(--text);}
+.section-desc{font-size:14px;color:var(--text-mute);margin-bottom:18px;}
+
+/* ── 탭 ── */
+.tabs{
+  display:flex;background:var(--bg-soft);border-radius:10px;
+  padding:3px;margin-bottom:18px;
+}
+.tab-btn{
+  flex:1;background:transparent;border:none;
+  padding:9px 4px;font-family:inherit;font-size:14px;font-weight:500;
+  color:var(--text-soft);border-radius:8px;cursor:pointer;
+  letter-spacing:-0.01em;transition:0.2s;
+}
+.tab-btn.active{
+  background:var(--bg);color:var(--text);font-weight:600;
+  box-shadow:0 1px 3px rgba(0,0,0,0.08);
+}
+.tab-content{display:none;}
+.tab-content.active{display:block;animation:slide 0.25s ease;}
+@keyframes slide{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── 경로 카드 ── */
+.route-card{
+  background:var(--bg);border:1px solid var(--line);
+  border-radius:14px;padding:16px 18px;margin-bottom:10px;
+}
+.route-card h3{
+  font-size:16px;font-weight:600;color:var(--text);
+  margin-bottom:8px;display:flex;align-items:center;gap:7px;
+}
+.route-card h3 .from{
+  font-size:11px;font-weight:600;color:var(--accent);
+  background:rgba(0,113,227,0.1);padding:3px 8px;border-radius:6px;
+}
+.route-text{font-size:14.5px;color:var(--text-soft);line-height:1.55;margin-bottom:10px;}
+.route-text strong{color:var(--text);font-weight:600;}
+.route-meta{display:flex;gap:14px;font-size:12.5px;color:var(--text-mute);margin-bottom:12px;font-weight:500;}
+.route-cta{display:flex;gap:6px;}
+.route-cta a{
+  flex:1;text-align:center;padding:9px 4px;
+  font-size:13px;font-weight:500;
+  background:var(--bg-soft);color:var(--text);
+  border-radius:9px;text-decoration:none;transition:0.15s;
+}
+.route-cta a:active{background:var(--line);}
+.note{
+  background:rgba(0,113,227,0.06);border-radius:12px;
+  padding:14px 16px;font-size:13.5px;color:var(--text-soft);
+  margin-top:14px;line-height:1.55;
+}
+.note .title{font-size:13.5px;font-weight:600;color:var(--accent);margin-bottom:4px;}
+
+/* ── 도착 후 ── */
+.arrive-grid{display:flex;flex-direction:column;gap:8px;}
+.arrive-block{
+  background:var(--bg-card);border:1px solid var(--line);
+  border-radius:12px;padding:14px 16px;
+}
+.arrive-block .h{font-size:14.5px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.arrive-block .b{font-size:13.5px;color:var(--text-soft);line-height:1.5;}
+.arrive-block .b a{color:var(--accent);text-decoration:none;font-weight:500;}
+
+/* ── 푸터 ── */
+footer{
+  text-align:center;padding:36px 22px 24px;
+  border-top:1px solid var(--line);margin-top:24px;
+}
+.prayer{font-size:14.5px;color:var(--text-soft);line-height:1.65;}
+.prayer em{display:block;font-style:normal;color:var(--text);font-weight:500;margin-bottom:6px;}
+.sig{margin-top:18px;font-size:11px;color:var(--text-mute);letter-spacing:0.04em;}
+</style>
+</head>
+<body>
+<main>
+
+<button class="music-toggle" id="musicToggle" aria-label="배경음악 켜기/끄기">🔇</button>
+<audio id="bgm" loop preload="auto">
+  <source src="ave-maria.mp3" type="audio/mpeg">
+</audio>
+
+<header class="hero">
+  <div class="kicker">파티마 성모님 행사</div>
+  <h1>동두천성당 길안내</h1>
+  <p class="subtitle">평화와 은총이 함께하시기를</p>
+</header>
+
+<div class="map-section">
+  <div class="map-static" style="cursor:default;">
+    <iframe 
+      src="https://maps.google.com/maps?q=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&hl=ko&z=16&output=embed" 
+      width="100%" 
+      height="100%" 
+      style="border:0;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <div class="map-pill">⛪ <strong>동두천성당</strong> · 동광로 64</div>
+  </div>
+
+  <div class="map-apps">
+    <a class="map-app" data-app="naver"
+       href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">
+      <span class="badge">N</span><span class="name">네이버지도</span>
+    </a>
+    <a class="map-app" data-app="kakao"
+       href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">
+      <span class="badge">K</span><span class="name">카카오맵</span>
+    </a>
+    <a class="map-app" data-app="google"
+       href="https://maps.google.com/maps?q=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">
+      <span class="badge">G</span><span class="name">구글맵</span>
+    </a>
+    <a class="map-app" data-app="tmap"
+       href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055277&goaly=37.908071">
+      <span class="badge">T</span><span class="name">티맵</span>
+    </a>
+  </div>
+</div>
+
+<div class="info-card">
+  <div class="info-row">
+    <div class="label">주소</div>
+    <div class="value">경기도 동두천시 동광로 64<span class="sub">(어수동 174-1)</span></div>
+  </div>
+  <div class="info-row">
+    <div class="label">일시</div>
+    <div class="value">
+      <div style="font-weight:600; color:var(--text); margin-bottom:6px;">26년 5월 2일</div>
+      <div class="schedule">
+        <div class="schedule-item"><span class="time">오전 10:00</span><span class="what">묵주기도 시작</span></div>
+        <div class="schedule-item"><span class="time">오전 10:30</span><span class="what">미사 시작</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="label">문의</div>
+    <div class="value">동두천봉사자 <a href="tel:010-9242-4990">010-9242-4990</a></div>
+  </div>
+</div>
+
+<section>
+  <h2>오시는 방법</h2>
+  <p class="section-desc">교통수단을 선택하시면 자세한 경로가 표시됩니다.</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="subway">지하철</button>
+    <button class="tab-btn" data-tab="car">자가용</button>
+    <button class="tab-btn" data-tab="bus">버스</button>
+  </div>
+
+  <div class="tab-content active" id="subway">
+    <div class="route-card">
+      <h3>1호선 동두천중앙역 <span class="from">가장 가까움</span></h3>
+      <p class="route-text"><strong>1번 출구</strong>에서 어수로 방향 직진, <strong>신천교</strong>를 건너 상패주공아파트 쪽으로 도보 약 10분.</p>
+      <div class="route-meta"><span>도보 10–12분</span><span>약 750m</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 도보</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 도보</a>
+      </div>
+    </div>
+    <div class="route-card">
+      <h3>의정부 출발 <span class="from">의정부</span></h3>
+      <p class="route-text"><strong>1호선 의정부역</strong>에서 <strong>소요산행</strong> 탑승 → <strong>동두천중앙역</strong> 하차.</p>
+      <div class="route-meta"><span>약 35분</span><span>10개 역</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+      </div>
+    </div>
+    <div class="route-card">
+      <h3>파주 출발 <span class="from">파주</span></h3>
+      <p class="route-text">파주는 1호선 직통이 없습니다. <strong>경의중앙선 → 청량리역에서 1호선 환승</strong>, 또는 <strong>금촌·운정 → 의정부행 광역버스 → 의정부역에서 1호선 환승</strong>이 편리합니다.</p>
+      <div class="route-meta"><span>약 1시간 40분 ~ 2시간</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+      </div>
+    </div>
+    <div class="route-card">
+      <h3>포천 출발 <span class="from">포천</span></h3>
+      <p class="route-text">포천은 지하철이 없으므로 <strong>3001·3006번 시외버스로 의정부역</strong>까지 이동 후 <strong>1호선 소요산행 → 동두천중앙역</strong>으로 환승해 주세요.</p>
+      <div class="route-meta"><span>약 1시간 30분</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="car">
+    <div class="route-card">
+      <h3>의정부 출발 <span class="from">의정부</span></h3>
+      <p class="route-text"><strong>3번 국도(평화로)</strong>를 따라 양주·동두천 방향 직진 → 동두천 시내 진입 → <strong>동두천중앙역 사거리</strong>에서 신천교 건너 좌회전.</p>
+      <div class="route-meta"><span>약 30–40분</span><span>약 18km</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=navigation&elat=37.908071&elng=127.055277&etitle=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오</a>
+        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055277&goaly=37.908071">티맵</a>
+      </div>
+    </div>
+    <div class="route-card">
+      <h3>포천 출발 <span class="from">포천</span></h3>
+      <p class="route-text"><strong>372번 지방도(호국로) → 신북IC 또는 자일동 경유 → 3번 국도</strong>로 합류 후 동두천 시내 진입.</p>
+      <div class="route-meta"><span>약 40–50분</span><span>약 25km</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=navigation&elat=37.908071&elng=127.055277&etitle=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오</a>
+        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055277&goaly=37.908071">티맵</a>
+      </div>
+    </div>
+    <div class="route-card">
+      <h3>파주 출발 <span class="from">파주</span></h3>
+      <p class="route-text"><strong>56번 지방도(연풍로) → 적성·전곡 경유 → 3번 국도</strong>로 동두천 진입. 또는 <strong>외곽순환고속도로 → 의정부IC → 평화로</strong>.</p>
+      <div class="route-meta"><span>약 1시간</span><span>약 40km</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=navigation&elat=37.908071&elng=127.055277&etitle=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오</a>
+        <a href="tmap://route?goalname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9&goalx=127.055277&goaly=37.908071">티맵</a>
+      </div>
+    </div>
+    <div class="note">
+      <div class="title">🅿︎ 주차 안내</div>
+      성당 내 주차 공간이 한정적입니다. 가능하시면 카풀이나 대중교통을 이용해 주시고, 자가용 이용 시 여유 있게 도착해 주세요.
+    </div>
+  </div>
+
+  <div class="tab-content" id="bus">
+    <div class="route-card">
+      <h3>의정부 출발 <span class="from">의정부</span></h3>
+      <p class="route-text"><strong>36번(의정부↔동두천)</strong> 또는 <strong>3300번 광역</strong> 탑승 → <strong>동두천중앙역</strong> 또는 <strong>상패주공아파트</strong> 정류장 하차.</p>
+      <div class="route-meta"><span>약 50분 ~ 1시간</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+      </div>
+    </div>
+    <div class="route-card">
+      <h3>포천 출발 <span class="from">포천</span></h3>
+      <p class="route-text"><strong>3001·3006번(포천↔의정부)</strong>으로 의정부역까지 → <strong>1호선</strong> 또는 <strong>36번 버스</strong>로 환승.</p>
+      <div class="route-meta"><span>약 1시간 30분 ~ 2시간</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+      </div>
+    </div>
+    <div class="route-card">
+      <h3>파주 출발 <span class="from">파주</span></h3>
+      <p class="route-text"><strong>금촌·운정 → 의정부행 광역버스(3200·G7426 등)</strong> 탑승 → 의정부에서 <strong>36번 버스</strong> 또는 <strong>1호선</strong> 환승.</p>
+      <div class="route-meta"><span>약 2시간</span></div>
+      <div class="route-cta">
+        <a href="https://app.map.naver.com/launchApp/?version=11&menu=route&dlat=37.908071&dlng=127.055277&dname=%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9">네이버 경로</a>
+        <a href="https://map.kakao.com/link/to/%EB%8F%99%EB%91%90%EC%B2%9C%EC%84%B1%EB%8B%B9,37.908071,127.055277">카카오 경로</a>
+      </div>
+    </div>
+    <div class="note">
+      <div class="title">🚏 동두천중앙역 주요 정차 노선</div>
+      36 · 3300 · 39 · 53 · 54 · 511 · 531 · 535 · 7100 등. 실시간 정보는 네이버지도·카카오맵에서 확인해 주세요.
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>도착 후</h2>
+  <p class="section-desc">행사 시작 20–30분 전 도착을 권장드립니다.</p>
+  <div class="arrive-grid">
+    <div class="arrive-block">
+      <div class="h">⛪ 입장 안내</div>
+      <div class="b">정문에서 봉사자분들이 안내해 드립니다.</div>
+    </div>
+    <div class="arrive-block">
+      <div class="h">📿 묵주 준비</div>
+      <div class="b">개인 묵주를 가져오시면 좋습니다. </div>
+    </div>
+    <div class="arrive-block">
+      <div class="h">☎ 길을 잃으셨을 때</div>
+      <div class="b">동두천봉사자 <a href="tel:010-9242-4990">010-9242-4990</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="prayer">
+    <em>"두려워하지 말아라, 내가 너희와 함께 있다"</em>
+    파티마의 성모님,<br>오시는 길을 지켜 주소서.
+  </div>
+  <div class="sig">DONGDUCHEON CATHOLIC CHURCH</div>
+</footer>
+
+</main>
+<script>
+// ── 탭 전환 ──
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const tab=btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tab).classList.add('active');
+  });
+});
+
+// ── 배경음악 ──
+const bgm=document.getElementById('bgm');
+const toggle=document.getElementById('musicToggle');
+let playing=false;
+
+function setUI(on){
+  playing=on;
+  toggle.textContent=on?'🎵':'🔇';
+  toggle.classList.toggle('playing',on);
+  toggle.setAttribute('aria-label',on?'배경음악 끄기':'배경음악 켜기');
+}
+
+toggle.addEventListener('click',()=>{
+  if(bgm.paused){
+    bgm.volume=0.45;
+    bgm.play().then(()=>setUI(true)).catch(()=>{});
+  }else{
+    bgm.pause();
+    setUI(false);
+  }
+});
+
+// 자동재생 시도 → 차단되면 첫 터치시 재생
+window.addEventListener('load',()=>{
+  bgm.volume=0.45;
+  bgm.play().then(()=>setUI(true)).catch(()=>{
+    const start=()=>{
+      bgm.play().then(()=>setUI(true)).catch(()=>{});
+      document.removeEventListener('click',start);
+      document.removeEventListener('touchstart',start);
+    };
+    document.addEventListener('click',start);
+    document.addEventListener('touchstart',start);
+  });
+});
+bgm.addEventListener('pause',()=>{ if(bgm.currentTime>0) setUI(false); });
+bgm.addEventListener('play',()=>setUI(true));
+</script>
+</body>
+</html>
